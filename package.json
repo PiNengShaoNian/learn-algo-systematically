@@ -1,0 +1,19 @@
+{
+  "name": "learn-algo-systematically",
+  "version": "1.0.0",
+  "description": "慕课网算法体系课随堂答案Typescript",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "algorithm",
+    "answer",
+    "mooc",
+    "慕课网",
+    "算法体系课",
+    "JavaScript",
+    "TypeScript"
+  ],
+  "author": "",
+  "license": "ISC"
+}
