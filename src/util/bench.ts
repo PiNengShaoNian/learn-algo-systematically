@@ -9,6 +9,6 @@ export default function bench(
     fn(dataSize[i])
     const endTime = Date.now()
     const time = (endTime - startTime) / 1000
-    console.log('n = ' + dataSize[i] + ' ,100 runs ' + time + ' s')
+    console.log('n = ' + dataSize[i] + ' ,1 runs ' + time + ' s')
   }
 }
