@@ -2,7 +2,7 @@ import bench from '../../../util/bench'
 import generateArr from '../../../util/generateArr'
 import ArrayQueue from '../array-queue'
 
-bench('ArrayQueue性能测试', [10000, 100000, 1000000], (iter) => {
+bench('ArrayQueue性能测试', [1000, 10000, 100000], (iter) => {
   const arr = generateArr(iter, (i) => i)
 
   const queue = new ArrayQueue<string>()
