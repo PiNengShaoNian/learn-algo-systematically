@@ -1,5 +1,5 @@
 import generateArr from '../../util/generateArr'
-import select from '../selecte'
+import select from '../select'
 
 test('select测试', () => {
   const testArr: number[] = generateArr(1000, (i) => i, true)
