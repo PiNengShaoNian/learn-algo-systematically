@@ -15,12 +15,41 @@ describe('二分查找测试', () => {
     expect(BinarySearch.binarySearch(testArr, 999)).toBe(-1)
   })
 
-  test('ceiling方法工作正常', () => {
+  test('upper方法工作正常', () => {
     const testArr = generateArr(100, (i) => i)
 
-    expect(BinarySearch.ceiling(testArr, 10)).toBe(10)
-    expect(BinarySearch.ceiling(testArr, 55.5)).toBe(56)
-    expect(BinarySearch.ceiling(testArr, -3)).toBe(0)
-    expect(BinarySearch.ceiling(testArr, 100)).toBe(testArr.length)
+    expect(BinarySearch.upper(testArr, 10)).toBe(11)
+    expect(BinarySearch.upper(testArr, 55.5)).toBe(56)
+    expect(BinarySearch.upper(testArr, -3)).toBe(0)
+    expect(BinarySearch.upper(testArr, 100)).toBe(testArr.length)
+  })
+
+  test('ceil方法工作正常', () => {
+    const testArr = generateArr(100, (i) => i)
+
+    expect(BinarySearch.ceil(testArr, 10)).toBe(10)
+    expect(BinarySearch.ceil(testArr, 63)).toBe(63)
+    expect(BinarySearch.ceil(testArr, 55.5)).toBe(56)
+    expect(BinarySearch.ceil(testArr, -3)).toBe(0)
+    expect(BinarySearch.ceil(testArr, 100)).toBe(testArr.length)
+  })
+
+  test('lowerCeil方法工作正常', () => {
+    const testArr = [1, 1, 2, 2, 3, 3, 4, 4]
+
+    expect(BinarySearch.lowerCeil(testArr, 0)).toBe(0)
+    expect(BinarySearch.lowerCeil(testArr, 1)).toBe(0)
+    expect(BinarySearch.lowerCeil(testArr, 2)).toBe(2)
+    expect(BinarySearch.lowerCeil(testArr, 2.5)).toBe(4)
+    expect(BinarySearch.lowerCeil(testArr, 100)).toBe(testArr.length)
+  })
+  test('lower方法工作正常', () => {
+    const testArr = [1, 1, 2, 2, 3, 3, 4, 4]
+
+    expect(BinarySearch.lower(testArr, 0)).toBe(-1)
+    expect(BinarySearch.lower(testArr, 1)).toBe(-1)
+    expect(BinarySearch.lower(testArr, 2)).toBe(1)
+    expect(BinarySearch.lower(testArr, 2.5)).toBe(3)
+    expect(BinarySearch.lower(testArr, 100)).toBe(testArr.length - 1)
   })
 })

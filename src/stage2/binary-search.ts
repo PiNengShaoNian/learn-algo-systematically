@@ -61,7 +61,7 @@ class BinarySearch {
     return -1
   }
 
-  static ceiling<E extends Comparable<E> | number | string>(
+  static upper<E extends Comparable<E> | number | string>(
     arr: E[],
     target: E
   ): number {
@@ -70,13 +70,117 @@ class BinarySearch {
     while (low < hi) {
       const mid = low + Math.floor((hi - low) / 2)
 
-      if (arr[mid] < target) {
+      if (arr[mid] <= target) {
         low = mid + 1
       } else {
-        hi = mid 
+        hi = mid
       }
     }
     return low
+  }
+
+  static ceil<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ): number {
+    const u = this.upper(data, target)
+
+    if (u - 1 >= 0 && this.compare(data[u - 1], target) === 0) return u - 1
+    else return u
+  }
+
+  static lowerCeil<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ): number {
+    let low = 0
+    let hi = data.length
+
+    while (low < hi) {
+      const mid = low + Math.floor((hi - low) / 2)
+
+      const cmp = this.compare(data[mid], target)
+
+      if (cmp < 0) {
+        low = mid + 1
+      } else hi = mid
+    }
+
+    return low
+  }
+
+  static lower<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ): number {
+    let low = -1
+    let hi = data.length - 1
+
+    while (low < hi) {
+      const mid = low + Math.floor((hi - low + 1) / 2)
+
+      const cmp = this.compare(data[mid], target)
+
+      if (cmp >= 0) hi = mid - 1
+      else low = mid
+    }
+
+    return low
+  }
+
+  static lowerFloor<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ): number {
+    const f = this.lower(data, target)
+
+    if (f + 1 < data.length && this.compare(data[f + 1], target) === 0)
+      return f + 1
+
+    return f
+  }
+
+  static upperFloor<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ): number {
+    let low = -1
+    let hi = data.length - 1
+
+    while (low < hi) {
+      const mid = low + Math.floor((hi - low + 1) / 2)
+
+      const cmp = this.compare(data[mid], target)
+
+      if (cmp > 0) {
+        hi = mid - 1
+      } else {
+        low = mid
+      }
+    }
+    return low
+  }
+
+  static binarySearch2<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ): number {
+    let low = 0
+    let hi = data.length
+
+    while (low < hi) {
+      const mid = low + Math.floor((hi - low) / 2)
+
+      const cmp = this.compare(data[mid], target)
+
+      if (cmp >= 0) {
+        hi = mid
+      } else low = mid + 1
+    }
+
+    if (low < data.length && this.compare(data[low], target) === 0) return low
+
+    return -1
   }
 }
 
