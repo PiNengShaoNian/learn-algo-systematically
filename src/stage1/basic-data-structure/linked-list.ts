@@ -473,6 +473,25 @@ class DoublyLinkedListCircular<E> {
     this._size--
   }
 
+  removeItem(item: E) {
+    if (this.isEmpty()) return
+
+    let currentNode = this._first!
+
+    while (currentNode !== this._last) {
+      if (currentNode.item === item) {
+        this.removeItemWithNode(currentNode)
+        return
+      }
+
+      currentNode = currentNode.next!
+    }
+
+    if (currentNode.item === item) {
+      this.removeLast()
+    }
+  }
+
   contains(item: E) {
     if (this.isEmpty()) return false
     let currentNode = this._first
