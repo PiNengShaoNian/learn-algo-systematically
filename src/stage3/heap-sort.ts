@@ -17,16 +17,18 @@ class HeapSort {
   }
 
   static heapSort1<E extends number | string | Comparable<E>>(data: E[]) {
-    for (let i = Math.floor(data.length / 2); i >= 1; i--) {
+    if (data.length <= 1) return data
+
+    for (let i = Math.floor((data.length - 2) / 2); i >= 0; i--) {
       this.sink(data, i, data.length - 1)
     }
 
     let endIndex = data.length - 1
 
-    while (endIndex > 1) {
-      this.exch(data, 1, endIndex)
+    while (endIndex > 0) {
+      this.exch(data, 0, endIndex)
       endIndex--
-      this.sink(data, 1, endIndex)
+      this.sink(data, 0, endIndex)
     }
 
     return data
@@ -43,14 +45,14 @@ class HeapSort {
     index: number,
     endIndex: number
   ) {
-    while (index * 2 <= endIndex) {
-      let biggestChildIndex = index * 2
+    while (index * 2 + 1 <= endIndex) {
+      let biggestChildIndex = index * 2 + 1
 
       if (
-        index * 2 + 1 <= endIndex &&
-        this.less(data[index * 2], data[index * 2 + 1])
+        index * 2 + 2 <= endIndex &&
+        this.less(data[index * 2 + 1], data[index * 2 + 2])
       )
-        biggestChildIndex = 2 * index + 1
+        biggestChildIndex = 2 * index + 2
 
       if (this.less(data[biggestChildIndex], data[index])) break
 

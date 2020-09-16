@@ -7,3 +7,8 @@ bench('堆排序', [10000, 100000], (iter) => {
 
   HeapSort.heapSort(arr)
 })
+bench('原地堆排序', [10000, 100000], (iter) => {
+  const arr: number[] = generateArr(iter, (i) => i, true)
+
+  HeapSort.heapSort1(arr)
+})

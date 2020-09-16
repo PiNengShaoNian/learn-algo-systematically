@@ -15,9 +15,8 @@ class Student implements Comparable<Student> {
 
 describe('插入排序', () => {
   test('能正确的排序数字', () => {
-    const testArr1: number[] = generateArr(3, (i) => i, true)
-    const testArr2: number[] = generateArr(3, (i) => i)
-    console.log(testArr1)
+    const testArr1: number[] = generateArr(10000, (i) => i, true)
+    const testArr2: number[] = generateArr(10000, (i) => i)
     expect(HeapSort.heapSort1(testArr1)).toEqual(testArr2)
   })
 
@@ -25,13 +24,13 @@ describe('插入排序', () => {
     const testArr1 = shuffle([...'ZYXWVUTSRQPONMLKJIHGFEDCBA'])
     const testArr2 = [...'ZYXWVUTSRQPONMLKJIHGFEDCBA'].sort()
 
-    expect(HeapSort.heapSort(testArr1)).toEqual(testArr2)
+    expect(HeapSort.heapSort1(testArr1)).toEqual(testArr2)
   })
 
   test('能正确地排序Comparable对象', () => {
     const testArr1: Student[] = generateArr(10000, (i) => new Student(i), true)
     const testArr2: Student[] = generateArr(10000, (i) => new Student(i))
 
-    expect(HeapSort.heapSort(testArr1)).toEqual(testArr2)
+    expect(HeapSort.heapSort1(testArr1)).toEqual(testArr2)
   })
 })

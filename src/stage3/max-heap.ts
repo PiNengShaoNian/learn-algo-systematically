@@ -86,6 +86,10 @@ class MaxHeap<E extends number | string | Comparable<E>> {
 
     return max
   }
+
+  max() {
+    return this.data[1]
+  }
 }
 
 export default MaxHeap
