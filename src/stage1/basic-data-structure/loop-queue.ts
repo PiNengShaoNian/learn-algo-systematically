@@ -52,6 +52,12 @@ class LoopQueue<E> implements Queue<E> {
     }
     return ret
   }
+
+  *[Symbol.iterator]() {
+    for (let i = this.first; i < this.last; i++) {
+      yield this.data[i]
+    }
+  }
 }
 
 export default LoopQueue
