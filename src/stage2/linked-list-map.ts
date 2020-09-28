@@ -23,7 +23,7 @@ class LinkedListMap<Key extends number | string | Comparable<Key>, Value>
     } else node.value = value
   }
 
-  remove(key: Key): Value | null {
+  delete(key: Key): Value | null {
     let prev = this.dummyHead
 
     while (prev.next) {

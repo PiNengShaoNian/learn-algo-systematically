@@ -13,14 +13,12 @@ class BSTMap<Key extends number | string | Comparable<Key>, Value>
   private root: BSTNode<Key, Value> | null = null
   private _size = 0
 
-  remove(key: Key): Value | null {
-    if (this.isEmpty()) return null
-    if (!this.contains(key)) return null
+  delete(key: Key): void {
+    if (this.isEmpty()) return
+    if (!this.contains(key)) return
 
-    const val = this.get(key)
     this.root = this._delete(this.root, key)
     this._size--
-    return val
   }
 
   private _delete(

@@ -1,6 +1,6 @@
 import https from 'https'
 import bench from '../../util/bench'
-import BSTMap from '../bst-map'
+import AVLTree from '../avl-tree'
 
 const TEXT_URL =
   'https://raw.githubusercontent.com/PiNengShaoNian/algorithms-fourth-edition/ab2630299722255ffc4b280019c72ef2db542d19/ch3/tale.txt'
@@ -17,10 +17,10 @@ https.get(TEXT_URL, (res) => {
     const words = str.split(/\s+/)
 
     bench(
-      'BSTMap性能测试',
+      'AVL性能测试',
       [words.length],
       () => {
-        const bst = new BSTMap<string, number>()
+        const bst = new AVLTree<string, number>()
 
         for (let i = 0; i < words.length; i++) {
           if (!bst.contains(words[i])) {
