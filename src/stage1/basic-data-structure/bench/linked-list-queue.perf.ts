@@ -5,7 +5,7 @@ import LinkedListQueue from '../linked-list-queue'
 bench('ArrayQueue性能测试', [1000, 10000, 100000], (iter) => {
   const arr = generateArr(iter, (i) => i)
 
-  const queue = new LinkedListQueue<string>()
+  const queue = new LinkedListQueue<number>()
 
   for (let i = 0; i < arr.length; i++) {
     queue.enqueue(arr[i])

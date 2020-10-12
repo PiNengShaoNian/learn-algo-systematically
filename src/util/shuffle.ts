@@ -1,4 +1,4 @@
-export default function shuffle(a: any[]): any[] {
+export default function shuffle<T>(a: T[]): T[] {
   var j, x, i
   for (i = a.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1))

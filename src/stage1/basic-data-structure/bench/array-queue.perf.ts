@@ -5,7 +5,7 @@ import ArrayQueue from '../array-queue'
 bench('ArrayQueue性能测试', [1000, 10000, 100000], (iter) => {
   const arr = generateArr(iter, (i) => i)
 
-  const queue = new ArrayQueue<string>()
+  const queue = new ArrayQueue<number>()
 
   for (let i = 0; i < arr.length; i++) {
     queue.enqueue(arr[i])
