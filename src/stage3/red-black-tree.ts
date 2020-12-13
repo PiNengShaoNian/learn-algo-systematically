@@ -4,11 +4,11 @@ import Map from '../model/Map'
 const RED = true
 const BLACK = false
 
-class Node<Key, Value> {
+class TreeNode<Key, Value> {
   public key: Key
   public value: Value
-  public left: Node<Key, Value> | null = null
-  public right: Node<Key, Value> | null = null
+  public left: TreeNode<Key, Value> | null = null
+  public right: TreeNode<Key, Value> | null = null
   public color: boolean = RED
   public size: number
 
@@ -22,9 +22,9 @@ class Node<Key, Value> {
 
 class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
   implements Map<Key, Value> {
-  private root: Node<Key, Value> | null = null
+  private root: TreeNode<Key, Value> | null = null
 
-  private isRed(node: null | Node<Key, Value>): boolean {
+  private isRed(node: null | TreeNode<Key, Value>): boolean {
     if (!node) return false
 
     return node.color
@@ -43,9 +43,9 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
   }
 
   private _delete(
-    node: Node<Key, Value> | null,
+    node: TreeNode<Key, Value> | null,
     key: Key
-  ): Node<Key, Value> | null {
+  ): TreeNode<Key, Value> | null {
     if (!node) return null
 
     if (this.compare(key, node.key) < 0) {
@@ -82,13 +82,13 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return this.balance(node)
   }
 
-  private _min(node: Node<Key, Value>): Node<Key, Value> {
+  private _min(node: TreeNode<Key, Value>): TreeNode<Key, Value> {
     if (!node.left) return node
 
     return this._min(node.left)
   }
 
-  private _deleteMin(node: Node<Key, Value>): null | Node<Key, Value> {
+  private _deleteMin(node: TreeNode<Key, Value>): null | TreeNode<Key, Value> {
     if (!node.left) return null
 
     if (!this.isRed(node.left) && !this.isRed(node.left.left)) {
@@ -100,7 +100,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return this.balance(node)
   }
 
-  private balance(node: Node<Key, Value> | null): Node<Key, Value> | null {
+  private balance(node: TreeNode<Key, Value> | null): TreeNode<Key, Value> | null {
     if (!node) return null
 
     if (this.isRed(node.right)) {
@@ -120,7 +120,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return node
   }
 
-  private moveRedLeft(node: Node<Key, Value>) {
+  private moveRedLeft(node: TreeNode<Key, Value>) {
     this.flipColors(node)
 
     if (node.right && this.isRed(node.right.left)) {
@@ -132,7 +132,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return node
   }
 
-  private moveRedRight(node: Node<Key, Value>) {
+  private moveRedRight(node: TreeNode<Key, Value>) {
     this.flipColors(node)
 
     if (node.left && this.isRed(node.left.left)) {
@@ -150,7 +150,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return this._get(this.root, key)
   }
 
-  private _get(node: Node<Key, Value> | null, key: Key): null | Value {
+  private _get(node: TreeNode<Key, Value> | null, key: Key): null | Value {
     if (!node) return null
 
     const compare = this.compare(key, node.key)
@@ -162,7 +162,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     } else return node.value
   }
 
-  private rotateLeft(node: Node<Key, Value>): Node<Key, Value> {
+  private rotateLeft(node: TreeNode<Key, Value>): TreeNode<Key, Value> {
     const newRoot = node.right!
 
     node.right = newRoot.left
@@ -176,7 +176,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return newRoot
   }
 
-  private rotateRight(node: Node<Key, Value>): Node<Key, Value> {
+  private rotateRight(node: TreeNode<Key, Value>): TreeNode<Key, Value> {
     const newRoot = node.left!
 
     node.left = newRoot.right
@@ -190,7 +190,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return newRoot
   }
 
-  private flipColors(node: Node<Key, Value>): void {
+  private flipColors(node: TreeNode<Key, Value>): void {
     if (!node || !node.left || !node.right) return
 
     if (
@@ -208,11 +208,11 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
   }
 
   private _put(
-    node: null | Node<Key, Value>,
+    node: null | TreeNode<Key, Value>,
     key: Key,
     value: Value
-  ): Node<Key, Value> {
-    if (!node) return new Node(key, value, 1, RED)
+  ): TreeNode<Key, Value> {
+    if (!node) return new TreeNode(key, value, 1, RED)
 
     const compare = this.compare(key, node.key)
 
@@ -237,7 +237,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return node
   }
 
-  compare(a: Key, b: Key): number {
+  private compare(a: Key, b: Key): number {
     if (typeof a === 'string') {
       if (a === b) return 0
       return a > b ? 1 : -1
@@ -251,11 +251,93 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return this._size(this.root)
   }
 
-  private _size(node: Node<Key, Value> | null): number {
+  private _size(node: TreeNode<Key, Value> | null): number {
     if (!node) return 0
 
     return node.size
   }
+
+  floor(key: Key): Key | null {
+    const node = this._floor(this.root, key)
+    if (!node) return null
+
+    return node.key
+  }
+
+  private _floor(
+    node: TreeNode<Key, Value> | null,
+    key: Key
+  ): TreeNode<Key, Value> | null {
+    if (!node) return null
+
+    const compare = this.compare(key, node.key)
+
+    if (compare === 0) return node
+    else if (compare < 0) return this._floor(node.left, key)
+    else {
+      const rightNode = this._floor(node.right, key)
+
+      if (rightNode) return rightNode
+      else return node
+    }
+  }
+
+  ceiling(key: Key): null | Key {
+    const node = this._ceiling(this.root, key)
+    if (!node) return null
+
+    return node.key
+  }
+
+  private _ceiling(
+    node: TreeNode<Key, Value> | null,
+    key: Key
+  ): TreeNode<Key, Value> | null {
+    if (!node) return null
+
+    const compare = this.compare(key, node.key)
+
+    if (compare === 0) return node
+    else if (compare > 0) return this._ceiling(node.right, key)
+    else {
+      const leftNode = this._ceiling(node.left, key)
+
+      if (leftNode) return leftNode
+      else return node
+    }
+  }
+
+  select(index: number): Key | null {
+    if (index > this.size() || this.isEmpty() || index < 0) {
+      return null
+    }
+
+    return this._select(this.root!, index).key
+  }
+
+  private _select(node: TreeNode<Key, Value>, index: number): TreeNode<Key, Value> {
+    const leftSubtreeSize = this._size(node.left)
+
+    if (leftSubtreeSize === index) return node
+    else if (leftSubtreeSize > index) return this._select(node.left!, index)
+    else return this._select(node.right!, index - leftSubtreeSize - 1)
+  }
+
+  rank(key: Key) {
+    return this._rank(this.root, key)
+  }
+
+  private _rank(node: TreeNode<Key, Value> | null, key: Key): number {
+    if (!node) return 0
+
+    const compare = this.compare(key, node.key)
+    if (compare < 0) {
+      return this._rank(node.left, key)
+    } else if (compare > 0) {
+      return this._size(node.left) + 1 + this._rank(node.right, key)
+    } else return this._size(node.left)
+  }
+
   isEmpty(): boolean {
     return this._size(this.root) === 0
   }
