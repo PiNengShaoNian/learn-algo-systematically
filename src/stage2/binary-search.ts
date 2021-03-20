@@ -182,6 +182,58 @@ class BinarySearch {
 
     return -1
   }
+
+  /**
+   * 和c++中的lowerBound功能类似和upperBound配合使用能求出一个元素的左闭右开的边界
+   * @param data 有序数组
+   * @param target 要查找的目标
+   * @returns 元素在数组中的左边界
+   */
+  static lowerBound<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ) {
+    let lo = 0
+    let hi = data.length - 1
+
+    while (lo <= hi) {
+      const mid = lo + ((hi - lo) >> 1)
+
+      if (data[mid] > target) {
+        hi = mid - 1
+      } else if (data[mid] === target) {
+        hi = mid - 1
+      } else if (data[mid] < target) {
+        lo = mid + 1
+      }
+    }
+
+    if (lo >= data.length || data[lo] !== target) return data.length
+    return lo
+  }
+
+  static upperBound<E extends Comparable<E> | number | string>(
+    data: E[],
+    target: E
+  ) {
+    let lo = 0
+    let hi = data.length - 1
+
+    while (lo <= hi) {
+      const mid = lo + ((hi - lo) >> 1)
+
+      if (data[mid] > target) {
+        hi = mid - 1
+      } else if (data[mid] === target) {
+        lo = mid + 1
+      } else if (data[mid] < target) {
+        lo = mid + 1
+      }
+    }
+
+    if (hi < 0 || data[hi] !== target) return data.length
+    return hi + 1
+  }
 }
 
 export default BinarySearch

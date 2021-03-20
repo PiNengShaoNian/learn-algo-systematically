@@ -8,7 +8,7 @@ export const countingSort = <T>(
   const result: T[] = []
 
   for (let i = 0; i < elems.length; ++i) {
-    cnt[getId(elems[i])]++
+    cnt[getId(elems[i]) - l]++
   }
 
   const index = Array.from({ length: cnt.length + 1 }, () => 0)
@@ -18,7 +18,7 @@ export const countingSort = <T>(
   }
 
   for (let i = 0; i < elems.length; ++i) {
-    result[index[getId(elems[i])]++] = elems[i]
+    result[index[getId(elems[i]) - l]++] = elems[i]
   }
 
   return result
