@@ -44,35 +44,71 @@ const words = [
   'web.',
 ]
 
+const nums = [
+  997800000, -997900000, 998000000, -998100000, 998200000, -998300000,
+  998400000, -998500000, 998600000, -998700000, 998800000, -998900000,
+  999000000, -999100000, 999200000, -999300000, 999400000, -999500000,
+  999600000, -999700000, 999800000, -999900000,
+]
+
 describe('RedBlackTree', () => {
   test('能工作删除和添加元素', () => {
-    const map = new RedBlackTree<string, number>()
+    const strMap = new RedBlackTree<string, number>()
+    const numMap = new RedBlackTree<number, number>()
 
     for (const word of words) {
-      if (!map.contains(word)) {
-        map.put(word, 1)
-      } else map.put(word, map.get(word)! + 1)
+      if (!strMap.contains(word)) {
+        strMap.put(word, 1)
+      } else strMap.put(word, strMap.get(word)! + 1)
     }
 
-    const nativeMap: { [key: string]: number } = {}
+    const strNativeMap: { [key: string]: number } = {}
 
     for (const word of words) {
-      if (!nativeMap[word]) {
-        nativeMap[word] = 1
-      } else nativeMap[word] = nativeMap[word] + 1
+      strNativeMap[word] = (strNativeMap[word] ?? 0) + 1
     }
 
-    for (const key of Object.keys(nativeMap)) {
-      expect(map.get(key)).toBe(nativeMap[key])
+    for (const key of Object.keys(strNativeMap)) {
+      expect(strMap.get(key)).toBe(strNativeMap[key])
     }
 
-    expect(map.size()).toBe(new Set(words).size)
+    expect(strMap.size()).toBe(new Set(words).size)
 
-    for (const word of words) {
-      map.delete(word)
+    for (const word of Object.keys(strNativeMap)) {
+      const size = strMap.size()
+      expect(strMap.contains(word)).toBeTruthy()
+      strMap.delete(word)
+      expect(strMap.contains(word)).toBeFalsy()
+      expect(strMap.size()).toBe(size - 1)
     }
 
-    expect(map.size()).toBe(0)
+    expect(strMap.size()).toBe(0)
+
+    for (const num of nums) {
+      numMap.put(num, (numMap.get(num) ?? 0) + 1)
+    }
+
+    const numNativeMap: { [key: number]: number } = {}
+
+    for (const num of nums) {
+      numNativeMap[num] = (numNativeMap[num] ?? 0) + 1
+    }
+
+    for (const key of Object.keys(numNativeMap)) {
+      expect(numMap.get(+key)).toBe(numNativeMap[+key])
+    }
+
+    expect(numMap.size()).toBe(new Set(nums).size)
+
+    for (const num of nums) {
+      const size = numMap.size()
+      expect(numMap.contains(num)).toBeTruthy()
+      numMap.delete(num)
+      expect(numMap.contains(num)).toBeFalsy()
+      expect(numMap.size()).toBe(size - 1)
+    }
+
+    expect(numMap.size()).toBe(0)
   })
 
   test('ceiling方法工作正常', () => {
