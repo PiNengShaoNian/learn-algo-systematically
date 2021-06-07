@@ -52,4 +52,26 @@ describe('二分查找测试', () => {
     expect(BinarySearch.lower(testArr, 2.5)).toBe(3)
     expect(BinarySearch.lower(testArr, 100)).toBe(testArr.length - 1)
   })
+
+  test('lowerBound能正确的获得target左边界', () => {
+    const testArr = [1, 1, 2, 2, 3, 3, 4, 4]
+
+    expect(BinarySearch.lowerBound(testArr, 0)).toBe(testArr.length)
+    expect(BinarySearch.lowerBound(testArr, 1)).toBe(0)
+    expect(BinarySearch.lowerBound(testArr, 2)).toBe(2)
+    expect(BinarySearch.lowerBound(testArr, 3)).toBe(4)
+
+    expect(BinarySearch.lowerBound(testArr, 2.5)).toBe(testArr.length)
+    expect(BinarySearch.lowerBound(testArr, 100)).toBe(testArr.length)
+  })
+  test('upperBound能正确的获得target左边界', () => {
+    const testArr = [1, 1, 2, 2, 3, 3, 4, 4]
+
+    expect(BinarySearch.upperBound(testArr, 0)).toBe(testArr.length)
+    expect(BinarySearch.upperBound(testArr, 1)).toBe(2)
+    expect(BinarySearch.upperBound(testArr, 2)).toBe(4)
+    expect(BinarySearch.upperBound(testArr, 3)).toBe(6)
+    expect(BinarySearch.upperBound(testArr, 2.5)).toBe(testArr.length)
+    expect(BinarySearch.upperBound(testArr, 100)).toBe(testArr.length)
+  })
 })
