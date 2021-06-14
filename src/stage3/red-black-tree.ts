@@ -21,7 +21,8 @@ class TreeNode<Key, Value> {
 }
 
 class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
-  implements Map<Key, Value> {
+  implements Map<Key, Value>
+{
   private root: TreeNode<Key, Value> | null = null
 
   private isRed(node: null | TreeNode<Key, Value>): boolean {
@@ -88,6 +89,27 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return this._min(node.left)
   }
 
+  private _max(node: TreeNode<Key, Value>): TreeNode<Key, Value> {
+    if (!node.right) return node
+
+    return this._max(node.right)
+  }
+
+  min(): Key | null {
+    if (!this.root) return null
+    const node = this._min(this.root)
+
+    return node.key
+  }
+
+  max(): Key | null {
+    if (!this.root) return null
+
+    const node = this._max(this.root)
+
+    return node.key
+  }
+
   private _deleteMin(node: TreeNode<Key, Value>): null | TreeNode<Key, Value> {
     if (!node.left) return null
 
@@ -100,7 +122,9 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return this.balance(node)
   }
 
-  private balance(node: TreeNode<Key, Value> | null): TreeNode<Key, Value> | null {
+  private balance(
+    node: TreeNode<Key, Value> | null
+  ): TreeNode<Key, Value> | null {
     if (!node) return null
 
     if (this.isRed(node.right)) {
@@ -315,7 +339,10 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     return this._select(this.root!, index).key
   }
 
-  private _select(node: TreeNode<Key, Value>, index: number): TreeNode<Key, Value> {
+  private _select(
+    node: TreeNode<Key, Value>,
+    index: number
+  ): TreeNode<Key, Value> {
     const leftSubtreeSize = this._size(node.left)
 
     if (leftSubtreeSize === index) return node

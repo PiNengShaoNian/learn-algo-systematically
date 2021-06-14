@@ -126,4 +126,47 @@ describe('RedBlackTree', () => {
     map.delete(2)
     expect(map.select(2)).toBe(5)
   })
+
+  test('max方法工作正常', () => {
+    const map = new RedBlackTree<number, boolean>()
+
+    map.put(1, true)
+    expect(map.max()).toBe(1)
+    map.put(2, true)
+    expect(map.max()).toBe(2)
+
+    map.put(3, true)
+    expect(map.max()).toBe(3)
+
+    map.put(5, true)
+    expect(map.max()).toBe(5)
+
+    map.put(6, true)
+
+    expect(map.max()).toBe(6)
+
+    map.put(8, true)
+    expect(map.max()).toBe(8)
+    map.delete(8)
+    map.put(7, true)
+    expect(map.max()).toBe(7)
+  })
+
+  test('min方法工作正常', () => {
+    const map = new RedBlackTree<number, boolean>()
+
+    map.put(1, true)
+    map.put(2, true)
+    map.put(3, true)
+    map.put(5, true)
+    map.put(6, true)
+    map.put(8, true)
+    map.put(7, true)
+
+    expect(map.min()).toBe(1)
+    map.delete(1)
+    expect(map.min()).toBe(2)
+    map.delete(2)
+    expect(map.min()).toBe(3)
+  })
 })
