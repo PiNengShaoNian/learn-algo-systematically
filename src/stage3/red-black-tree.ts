@@ -50,7 +50,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
     if (!node) return null
 
     if (this.compare(key, node.key) < 0) {
-      if (!this.isRed(node.left) && node.left && this.isRed(node.left.left)) {
+      if (!this.isRed(node.left) && node.left && !this.isRed(node.left.left)) {
         node = this.moveRedLeft(node)
       }
 
@@ -60,7 +60,7 @@ class RedBlackTree<Key extends string | number | Comparable<Key>, Value>
         node = this.rotateRight(node)
       }
 
-      if (this.compare(key, node.key) === 0 && !node.right) return null
+      if (this. compare(key, node.key) === 0 && !node.right) return null
 
       if (
         !this.isRed(node.right) &&
